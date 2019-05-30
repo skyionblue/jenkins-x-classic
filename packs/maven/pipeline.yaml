@@ -7,9 +7,9 @@ pipelines:
   pullRequest:
     build:
       steps:
-      - sh: mvn versions:set -DnewVersion=$PREVIEW_VERSION
+      - sh: mvn versions:set -DnewVersion=$PREVIEW_VERSION -DskipTests -Dproget-deploy=true
         name: set-version
-      - sh: mvn install
+      - sh: mvn install -DskipTests -Dproget-deploy=true
         name: mvn-install
   release:
     setVersion:
@@ -23,5 +23,5 @@ pipelines:
         name: tag-version
     build:
       steps:
-      - sh: mvn clean deploy
+      - sh: mvn clean install -DskipTests -Dproget-deploy=true
         name: mvn-deploy
